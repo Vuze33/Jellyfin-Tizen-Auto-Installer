@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Jellyfin Tizen Auto-Installer (improved & hardened)
+# Jellyfin Tizen Auto-Installer
 # Works WITHOUT Tizen Studio for Developer Mode TVs
 set -euo pipefail
 IFS=$'\n\t'
