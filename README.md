@@ -1,93 +1,126 @@
-# Jellyfin Tizen Auto-Installer Script
+# Jellyfin Tizen Auto-Installer
 
-This script provides a hardened, user-friendly method for installing the Jellyfin app on Samsung Tizen TVs **without Tizen Studio**. It fetches the latest available builds from GitHub, scans your network for compatible Samsung TVs in Developer Mode, and automates the installation process using Docker.
+Easily install the latest Jellyfin app builds on your Samsung Tizen TV **without Tizen Studio**—using only Docker and your local network.  
+This script brings together the best open-source tools for a seamless, repeatable, and interactive (or fully automated) installation process.
 
 ---
 
 ## Features
 
-- **No Tizen Studio Required**: Installs directly using Developer Mode over the network.
-- **Automatic Build Fetching**: Retrieves latest `.wgt` builds from the official releases.
-- **Network Scanning**: Detects Samsung TVs on your local network (requires `nmap` for scanning).
-- **Interactive & Non-interactive Modes**: Supports both user-friendly prompts and automation.
-- **Caching & Validation**: Downloads and caches build files with integrity checks.
-- **Docker-based Isolation**: Uses a dedicated Docker image for the install process.
-- **Enhanced Logging & Retry Logic**: Improved error messages and multiple attempts for reliability.
+- **No Tizen Studio Needed:** Uses the TV's Developer Mode—no Samsung account or Tizen IDE required.
+- **Automatic Build Fetch:** Grabs the latest `.wgt` builds from [jeppevinkel/jellyfin-tizen-builds](https://github.com/jeppevinkel/jellyfin-tizen-builds).
+- **Network Scan:** Searches your local network for compatible Samsung TVs (requires `nmap`).
+- **Interactive & Automated:** Use interactively (with prompts) or non-interactively for scripting/CI.
+- **Caching & Validation:** Downloads and validates builds, caching for future use.
+- **Docker Powered:** Leverages a prebuilt Docker image with the Tizen SDK for environment isolation.
+- **Robust Logging & Retries:** Enhanced error output and automatic retries for reliability.
 
 ---
 
-## Usage
+## Prerequisites
 
-### **Prerequisites**
-
-- **Docker** installed and usable by your user.
-- **jq** (optional, for faster JSON parsing: `sudo apt install jq`).
-- **nmap** (for automatic TV detection: `sudo apt install nmap`).
-- **curl** (usually preinstalled).
-- **Optional:** `timeout` utility for better control over command timeouts.
-
-### **Running the Script**
-
-1. Download the script (e.g., `installer.sh`) and make it executable:
-    ```sh
-    chmod +x installer.sh
-    ```
-
-2. Run the script:
-    ```sh
-    ./installer.sh
-    ```
-
-    - For **non-interactive automation** (selects first build and first TV found):
-      ```sh
-      ./installer.sh --non-interactive
-      ```
-
-3. **Follow the prompts**:
-    - Select a Jellyfin build if multiple are available.
-    - The script will scan your local network for Samsung TVs. If none are found, you can enter your TV's IP manually.
-    - The script will attempt to install the app and provide troubleshooting steps if it fails.
+- **Docker** (must be installed and your user must have permission to run it)
+- **curl** (for HTTP requests, usually pre-installed)
+- **nmap** (for network scanning: `sudo apt install nmap` or equivalent)
+- **jq** (optional, speeds up JSON parsing: `sudo apt install jq`)
+- **timeout** (optional, for reliable timeouts: `sudo apt install coreutils` or `brew install coreutils`)
 
 ---
 
-## **Troubleshooting**
+## Quick Start
 
-- **Developer Mode** must be enabled on your TV:  
-  *Settings → General → External Device Manager → Developer Mode: ON*  
-  *(You can enter any name for Developer IP; restart the TV after enabling.)*
+1. **Download the Script**
 
-- **Ensure your PC and TV are on the same LAN/subnet.**
+   ```
+   wget https://raw.githubusercontent.com/Georift/install-jellyfin-tizen/main/installer.sh
+   chmod +x installer.sh
+   ```
 
-- If your TV isn't found automatically, check its IP from your router or TV network settings and enter it manually.
+2. **Run the Installer**
 
-- **Common error solutions:**
-    - Grant your user permission to Docker:  
-      `sudo usermod -aG docker $USER && newgrp docker`
-    - If you see rate-limit errors from GitHub, wait and try again or authenticate with a personal access token.
+   ```
+   ./installer.sh
+   ```
+
+   - For automation (no prompts, first build and TV auto-selected):
+
+     ```
+     ./installer.sh --non-interactive
+     ```
+
+3. **Follow Prompts**
+
+   - Choose your preferred Jellyfin build (if multiple available).
+   - Select your Samsung TV (auto-detected or enter IP manually).
+   - Installation progress and troubleshooting tips are shown as needed.
 
 ---
 
-## **Manual Command Example**
+## How It Works
 
-If the auto-installer fails, you can try running the Docker command manually:
+1. **Fetches latest builds** from [jeppevinkel/jellyfin-tizen-builds](https://github.com/jeppevinkel/jellyfin-tizen-builds) via the GitHub API.
+2. **Scans your local network** for Samsung TVs in Developer Mode (port 26101).
+3. **Downloads and validates** the selected `.wgt` build (caches for reuse).
+4. **Runs a Docker container** ([ghcr.io/georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen)) to push the app to your TV.
+5. **Logs output and errors**, retries if needed, and provides detailed troubleshooting if installation fails.
+
+---
+
+## Troubleshooting
+
+- **Enable Developer Mode on your TV:**
+  - *Settings → General → External Device Manager → Developer Mode: ON*
+  - Enter any value for Developer IP if prompted, then **restart your TV**.
+- **Find your TV's IP:**
+  - Check your router’s device list, or on the TV: *Settings → Network → Network Status*.
+- **Network Tips:**
+  - Ensure your PC and TV are on the same LAN/subnet.
+  - Temporarily disable firewalls if discovery fails.
+- **Docker Permissions:**
+  - If you see Docker permission errors:  
+    `sudo usermod -aG docker $USER && newgrp docker`
+- **Manual Install:**
+  - Use the provided Docker command in the error output for manual troubleshooting.
+
+---
+
+## Manual Docker Command Example
+
+If you need to run the install manually (e.g., for custom builds):
 
 ```sh
 docker run --rm --network host ghcr.io/georift/install-jellyfin-tizen:latest <TV_IP> "<PACKAGE_ID>" "<RELEASE_URL>"
-
-# Credits
-
-This project is possible thanks to the hard work of these projects and contributors. This repository simply brings together their work into a streamlined, user-friendly installer.
-
-- [jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen)  
-  The core open-source Jellyfin client for Samsung Tizen TVs.
-
-- [jeppevinkel/jellyfin-tizen-builds](https://github.com/jeppevinkel/jellyfin-tizen-builds)  
-  For providing up-to-date community development builds.
-
-- [vitalets/docker-tizen-webos-sdk](https://github.com/vitalets/docker-tizen-webos-sdk)  
-  For the Docker container preinstalled with the Tizen SDK, simplifying automation and scripting.
-
-- [Georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen)  
-  This repository (@Georift), which wraps, documents, and streamlines the install process for end users.
+```
+Replace `<TV_IP>`, `<PACKAGE_ID>`, and `<RELEASE_URL>` with values shown in the script output.
 
 ---
+
+## Caching & Files
+
+- Build files are cached in: `~/.jellyfin-tizen-cache/`
+- Temporary logs: `/tmp/jellyfin_install.log.<pid>`
+
+---
+
+## Credits
+
+This is possible thanks to these projects and contributors. This repository is simply a wrapper to make their work more accessible.
+
+- [jellyfin-tizen](https://github.com/jellyfin/jellyfin-tizen)  
+  The official Jellyfin client for Samsung Tizen TVs.
+
+- [jeppevinkel/jellyfin-tizen-builds](https://github.com/jeppevinkel/jellyfin-tizen-builds)  
+  Community-provided and bleeding-edge Jellyfin builds.
+
+- [vitalets/docker-tizen-webos-sdk](https://github.com/vitalets/docker-tizen-webos-sdk)  
+  Docker image with the Tizen SDK, simplifying automation.
+
+- [Georift/install-jellyfin-tizen](https://github.com/Georift/install-jellyfin-tizen)  
+  This repo (@Georift), providing the Docker wrapper and install script.
+
+---
+
+### Special thanks
+
+To all maintainers and contributors to the above projects.  
+If this helped you, please ⭐️ their repositories and consider supporting open-source development!
