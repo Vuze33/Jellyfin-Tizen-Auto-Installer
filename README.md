@@ -33,19 +33,19 @@ This script brings together the best open-source tools for a seamless, repeatabl
 
    ```
    wget https://github.com/Vuze33/Jellyfin-Tizen-Auto-Installer/releases/download/Release/install-jellyfin.sh
-   chmod +x installer.sh
+   chmod +x install-jellyfin.sh
    ```
 
 2. **Run the Installer**
 
    ```
-   ./installer.sh
+   ./install-jellyfin.sh
    ```
 
    - For automation (no prompts, first build and TV auto-selected):
 
      ```
-     ./installer.sh --non-interactive
+     ./install-jellyfin.sh --non-interactive
      ```
 
 3. **Follow Prompts**
