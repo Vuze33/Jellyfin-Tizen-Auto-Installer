@@ -67,9 +67,15 @@ This script brings together the best open-source tools for a seamless, repeatabl
 
 ## Troubleshooting
 
-- **Enable Developer Mode on your TV:**
-  - *Settings → General → External Device Manager → Developer Mode: ON*
-  - Enter any value for Developer IP if prompted, then **restart your TV**.
+- ** 📺 Enable Developer Mode on Samsung TV
+
+To install or sideload apps (like Jellyfin) on Samsung Tizen TVs, you first need to enable **Developer Mode**.
+
+1. On your Samsung remote, press the **Home** button.  
+2. Navigate to **Apps** and open it.  
+3. While on the **Apps** screen, press the following number sequence on your remote:  1 2 3 4 5
+4. A hidden Developer Mode menu will appear. Set Developer Mode → ON.
+
 - **Find your TV's IP:**
   - Check your router’s device list, or on the TV: *Settings → Network → Network Status*.
 - **Network Tips:**
