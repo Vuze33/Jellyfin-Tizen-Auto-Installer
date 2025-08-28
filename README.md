@@ -2,6 +2,8 @@
 
 This script provides a hardened, user-friendly method for installing the Jellyfin app on Samsung Tizen TVs **without Tizen Studio**. It fetches the latest available builds from GitHub, scans your network for compatible Samsung TVs in Developer Mode, and automates the installation process using Docker.
 
+Huge thanks to jeppevinkel for providing the Jellyfin Tizen .wgt builds—super helpful and much appreciated! 
+
 ---
 
 ## Features
