@@ -33,16 +33,21 @@ This script brings together the best open-source tools for a seamless, repeatabl
 
    ```
    wget https://github.com/Vuze33/Jellyfin-Tizen-Auto-Installer/releases/download/Release/install-jellyfin.sh
+   ```
+
+2. **Make the script executable**
+
+   ```
    chmod +x install-jellyfin.sh
    ```
 
-2. **Run the Installer**
+3. **Run the Installer**
 
    ```
    ./install-jellyfin.sh
    ```
 
-3. **Follow Prompts**
+4. **Follow Prompts**
 
    - Choose your preferred Jellyfin build (if multiple available).
    - Select your Samsung TV (auto-detected or enter IP manually).
