@@ -32,7 +32,7 @@ This script brings together the best open-source tools for a seamless, repeatabl
 1. **Download the Script**
 
    ```
-   wget https://raw.githubusercontent.com/Georift/install-jellyfin-tizen/main/installer.sh
+   wget https://github.com/Vuze33/Jellyfin-Tizen-Auto-Installer/releases/download/Release/install-jellyfin.sh
    chmod +x installer.sh
    ```
 
