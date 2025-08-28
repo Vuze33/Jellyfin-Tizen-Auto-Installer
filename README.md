@@ -67,7 +67,7 @@ This script brings together the best open-source tools for a seamless, repeatabl
 
 ## Troubleshooting
 
-- ** 📺 Enable Developer Mode on Samsung TV
+- **Enable Developer Mode on Samsung TV:**
 
 To install or sideload apps (like Jellyfin) on Samsung Tizen TVs, you first need to enable **Developer Mode**.
 
