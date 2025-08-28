@@ -42,12 +42,6 @@ This script brings together the best open-source tools for a seamless, repeatabl
    ./install-jellyfin.sh
    ```
 
-   - For automation (no prompts, first build and TV auto-selected):
-
-     ```
-     ./install-jellyfin.sh --non-interactive
-     ```
-
 3. **Follow Prompts**
 
    - Choose your preferred Jellyfin build (if multiple available).
